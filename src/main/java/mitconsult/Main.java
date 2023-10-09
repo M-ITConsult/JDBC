@@ -14,6 +14,7 @@ public class Main {
         //            String query = "INSERT INTO utilisateur (nom, email)" +
 //                    "VALUES ('"+ nom +"','"+ mail +"')";
         String query2 = "SELECT * FROM utilisateur";
+        String query3 = "SELECT nom FROM utilisateur";
 
         try {
             Connection connection = ConnectionFactory.CreateConnection();
@@ -25,17 +26,19 @@ public class Main {
 //            System.out.print("Entrez un mail: ");
 //            String mail = sc.nextLine();
             Statement statement = connection.createStatement();
-            // Affiche le nombre de Row et execute la query
+            // Affiche le nombre de requêtes et execute la query
 //            int nbrRowUpdate = statement.executeUpdate(query);
 //            System.out.println(nbrRowUpdate);
             // Méthode pour afficher le SELECT * FROM dans la console Java
-            ResultSet resultSet = statement.executeQuery(query2);
+            ResultSet resultSet = statement.executeQuery(query3);
 
             while(resultSet.next()) {
+                // Affichage d'un ou plusieurs colonnes en fonction de la requête
                 String column1 = resultSet.getString("nom");
                 String column2 = resultSet.getString("email");
 
-                System.out.printf("Result: %s, %s%n", column1, column2);
+
+                System.out.printf("Result: %s", column1);
             }
 
         } catch (SQLException e) {
