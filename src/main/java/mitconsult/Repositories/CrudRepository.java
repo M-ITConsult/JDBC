@@ -1,14 +1,12 @@
 package mitconsult.Repositories;
-
-import mitconsult.Personne;
-
+import mitconsult.Repositories.Entities.Utilisateur;
 import java.util.List;
 
 public interface CrudRepository {
 
-    List<Personne> getAll();
-    Personne getById(int id);
-    void create(Personne personne);
-    Personne update(int id, String nom, String email);
+    List<Utilisateur> getAll();
+    Utilisateur getById(int id);
+    void create(Utilisateur utilisateur);
+    Utilisateur update(int id, String nom, String email);
     void delete(int id);
 }
