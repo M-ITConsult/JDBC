@@ -6,6 +6,7 @@ import mitconsult.Repositories.Entities.Utilisateur;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class CrudRepositoryImpl implements CrudRepository {
@@ -74,6 +75,23 @@ public class CrudRepositoryImpl implements CrudRepository {
     }
     @Override
     public Utilisateur update(int id, String nom, String email) {
+        String query = "UPDATE utilisateur SET nom = ?, email = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.CreateConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1,nom);
+            preparedStatement.setString(2,email);
+            preparedStatement.setInt(3,id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return getById(id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error connection", e);
+        }
+
         return null;
     }
 

@@ -64,10 +64,10 @@ public class Main {
 
         // Méthode pour récupérer toutes les colonnes sans connaître à l'avance le nom
         String query = "SELECT * FROM utilisateur";
-        try {
-            Connection connection = ConnectionFactory.CreateConnection();
+        try (Connection connection = ConnectionFactory.CreateConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query)) {
+
             ResultSetMetaData metaData = resultSet.getMetaData();
 
             int columnCount = metaData.getColumnCount();
@@ -79,7 +79,7 @@ public class Main {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error Connection",e);
         }
     }
 }
